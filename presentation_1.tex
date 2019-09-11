@@ -1,0 +1,740 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Beamer Presentation
+% LaTeX Template
+% Version 1.0 (10/11/12)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND THEMES
+%----------------------------------------------------------------------------------------
+
+\documentclass{beamer}
+\usepackage[export]{adjustbox}
+\mode<presentation> {
+
+% The Beamer class comes with a number of default slide themes
+% which change the colors and layouts of slides. Below this is a list
+% of all the themes, uncomment each in turn to see what they look like.
+
+\usepackage{graphicx}
+\usepackage{graphics}
+
+%\usetheme{default}
+%\usetheme{AnnArbor}
+%\usetheme{Antibes}
+%\usetheme{Bergen}
+%\usetheme{Berkeley}
+%\usetheme{Berlin}
+%\usetheme{Boadilla}
+%\usetheme{CambridgeUS}
+%\usetheme{Copenhagen}
+%\usetheme{Darmstadt}
+%\usetheme{Dresden}
+%\usetheme{Frankfurt}
+%\usetheme{Goettingen}
+%\usetheme{Hannover}
+%\usetheme{Ilmenau}
+%\usetheme{JuanLesPins}
+%\usetheme{Luebeck}
+\usetheme{Madrid}
+%\usetheme{Malmoe}
+%\usetheme{Marburg}
+%\usetheme{Montpellier}
+%\usetheme{PaloAlto}
+%\usetheme{Pittsburgh}
+%\usetheme{Rochester}
+%\usetheme{Singapore}
+%\usetheme{Szeged}
+%\usetheme{Warsaw}
+
+% As well as themes, the Beamer class has a number of color themes
+% for any slide theme. Uncomment each of these in turn to see how it
+% changes the colors of your current slide theme.
+
+%\usecolortheme{albatross}
+%\usecolortheme{beaver}
+%\usecolortheme{beetle}
+%\usecolortheme{crane}
+%\usecolortheme{dolphin}
+%\usecolortheme{dove}
+%\usecolortheme{fly}
+%\usecolortheme{lily}
+%\usecolortheme{orchid}
+%\usecolortheme{rose}
+%\usecolortheme{seagull}
+%\usecolortheme{seahorse}
+%\usecolortheme{whale}
+%\usecolortheme{wolverine}
+
+%\setbeamertemplate{footline} % To remove the footer line in all slides uncomment this line
+%\setbeamertemplate{footline}[page number] % To replace the footer line in all slides with a simple slide count uncomment this line
+
+%\setbeamertemplate{navigation symbols}{} % To remove the navigation symbols from the bottom of all slides uncomment this line
+}
+
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title[Internha]{A Brief Introduction to Teaching Complexity} % The short title appears at the bottom of every slide, the full title is only on the title page
+
+\author{Farnam Mansouri, \\
+Advisor: Dr. Adish Singla} % Your name
+\institute[SUT] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
+{
+Sharif University of Technology \\ % Your institution for the title page
+\medskip
+\textit{fmansouri@ce.sharif.edu} % Your email address
+}
+\date{\today} % Date, can be changed to a custom date
+
+\begin{document}
+\begin{frame}
+\titlepage % Print the title page as the first slide
+\end{frame}
+
+
+% -------------------------------------------------
+\begin{frame}
+\frametitle{Overview} % Table of contents slide, comment this block out to remove it
+\tableofcontents % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
+\end{frame}
+
+
+\section{Why Teaching?}
+\begin{frame}{What is teaching?}
+    \begin{figure}[t]
+    
+    \includegraphics[angle = 0, width=0.6\textwidth]{Figures/teacher.png}
+    \end{figure}
+    
+\end{frame}
+
+
+\begin{frame}{Why Teaching, though?}
+    \begin{figure}[t]
+    \centering
+    \includegraphics[angle = 0, width=0.6\textwidth]{Figures/jackie.png}
+    \end{figure}
+    
+\end{frame}
+
+\begin{frame}{Why Teaching?}
+    Some Applications:
+    \begin{itemize}
+        \item Human Robot Interactions. 
+        \begin{itemize}
+            \item Develop algorithm for understanding that our system is being taught.
+            \item gaining insight how to interact with robot instructor.
+            \item Inverse Reinforcement Learning (IRL).
+        \end{itemize}
+        
+        \item Education. (personalized education) % doulingo or geologist show rock to student
+        \item Trustworthy AI.(Adversarial Attack) % spam mail
+        
+    \end{itemize}
+\end{frame}
+
+
+\section{Preliminaries}
+% -------------------------------------------------
+\subsection{Basic Definitions}
+
+\begin{frame}{Basic Definitions}
+    \begin{definition}[Concept Class]
+    $X = \{x_1, x_2, ..., x_n\}$ is set of instances; then $c:X\rightarrow\{0,1\}$ is called concept. Also a set of concepts is called concept class.
+\end{definition}
+
+\begin{definition}[incidence matrix of C]
+$A_j^i = 1$ iff $x_i \in c_j$
+\end{definition}
+
+
+
+\end{frame}
+
+
+% -------------------------------------------------
+\begin{frame}
+\frametitle{Basic Definitions (cont.)}
+
+
+\begin{definition}[labeled sequence]
+$z|f = \{ (x,f(x)) : x \in z \}$
+\end{definition}
+
+\begin{definition}[version space ($C_{z|f}$)]
+$c$ is consistent with $z|f$ if $z|f = z|c$ \\
+$C_{z|f} = \{ c\in C:$ c is consistent with $z|f\}$
+\end{definition}
+
+\begin{definition}[intersections of $z$ with concept class $C$]
+$\Pi_c(z) = \{ c \cap  z: c \in C \}$
+\end{definition}
+
+\end{frame}
+
+
+
+% -------------------------------------------------
+\begin{frame}
+\begin{definition}[VC dimension (VCD)]
+$C$ is shattered by $z$ if $\Pi_c(z) = 2 ^ z$ \\
+$\Pi_C(d) = max_{|z| = d} \Pi_c(z)$ \\
+$VCD(C) = max_d: \Pi_C(d) = 2^d$
+\end{definition}
+
+\frametitle{Basic Definitions (cont.)}
+\begin{definition}
+$C$ is $(x,y)$ concept class is a concept class, if $\Pi_C(x) \leq y$.
+\end{definition}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Basic Definitions (cont.)}
+
+
+% -------------------------------------------------
+\begin{definition}
+$f(x,y) = max_{C \in (x,y)} TD_{min}(C)$
+\end{definition}
+
+\begin{definition}[monotonic function]
+A function on concepts classes is called monotonic if, $\forall C' \subseteq C, K(C') \leq K(C)$, and is called twofold monotonic if K is monotonic and, $\forall X' \subseteq X, K(C_{|X'}) \leq K(C)$.
+\end{definition}
+\end{frame}
+
+
+
+
+
+
+% -------------------------------------------------
+\begin{frame}
+\frametitle{Teacher-Directed model}
+\begin{itemize}
+\item Teaching-Directed complexity for C with respect to $c_t$ is $M_{td}(C,c_t)$, which is defined as  $min_{|z|}|C_{z|t}| = 1$
+\item We call z minimum sequence for $c_t$
+\item A teaching set for C with respect to $c$ is $\mathcal{TS}(C,c)$, is a all sets that are only consistent with c and no other concept.
+
+\end{itemize}
+
+\end{frame}
+
+% -------------------------------------------------
+\begin{frame}
+\frametitle{Teacher-Directed model (cont.)}
+
+
+Teaching complexity of C:
+\begin{itemize}
+\item $M_{td-worst}(c) = max_{c_t \in C}(M_{td}(C, c_t))$
+\item $M_{td-best}(c) = min_{c_t \in C}(M_{td}(C, c_t))$
+\item $M_{td-average}(c) = \sum_{c\in C}P(c)M_{td}(C, c_t)$ (with respect to distribution P)
+\end{itemize}
+
+
+\end{frame}
+
+
+
+\subsection{Recursive Teaching Dimension}
+% --------------------------------------------------
+\begin{frame}
+\frametitle{Recursive Teaching Dimension}
+
+
+
+\begin{definition}[teaching plan]
+P is sequence $((c_1, S_1), ..., (c_N, S_N))$, with following properties:
+\begin{itemize}
+\item $C = \{c_1, ..., c_n\}$
+\item $\forall 1 \leq t \leq N: S_t \in \mathcal{TS}(c,\{c_t, ..., c_n\})$
+\end{itemize}
+\end{definition}
+
+\begin{itemize}
+\item $ord(P) := max_{t=1, ..., N-1} |S_t|$ is called order of teaching plan.
+\item Recursive Teaching Dimension $RTD(C) := min\{ord(P)|P$ is a teaching plan for $C\}$
+\end{itemize}
+\end{frame}
+
+% --------------------------------------------------
+\begin{frame}
+\frametitle{Properties of $RTD$}
+
+\begin{itemize}
+    \item $RTD$ is monotonic. (Also VCD is monotonic too)
+    \item a teaching plan in canonical form is choosing the easiest to learn concept every time, i.e., $|S_t| = TD_{min}(c_t, \{c_t, ..., c_N\})$.
+    \item $RTD$ is equal to any teaching plan in canonical form.
+    \item $RTD(C) = max_{C' \subseteq C} TS_{min}(C')$
+\end{itemize}
+
+\begin{lemma}\label{lem:monot}
+    if K is monotonic and $\forall C: TD_{min}(C) \leq K(C)$, then $\forall C: RTD(C) \leq K(C)$
+\end{lemma}
+
+\end{frame}
+
+
+
+
+\subsection{Sample Compression Schemes}
+% --------------------------------------------------
+\begin{frame}
+\frametitle{Sample Compression Schemes}
+\begin{definition}[Compression Schemes with Information Q]
+Let $|X| = n$ and 
+\begin{equation*}
+L_C(k_1,k_2) = \{(Y,y):Y \subseteq X, k_1\leq |Y| \leq k_2, y \in C_{|Y}\}
+\end{equation*}
+be the set of labeled samples from C, of sizes between $k_1$ and $k_2$. A k-sample compression scheme for $C$ with information $Q$, for a finite set of $Q$, consists of tow maps $\kappa, \rho$ for which the following hold:
+\begin{itemize}
+\item 
+  $\kappa$ (the compression map)
+  \begin{equation*}
+  \kappa: L_C(1,n) \to L_C(0,k) \times Q
+  \end{equation*}
+  takes $(Y, y)$ to $((Z, z),q)$ with $Z\subseteq Y$ and $y_{|Z} = z$.
+\end{itemize}
+
+\end{definition}
+\end{frame}
+
+% --------------------------------------------------
+\begin{frame}
+\frametitle{Sample Compression Schemes (cont.)}
+\begin{definition}[Compression Schemes with Information Q (cont.)]
+
+\begin{itemize}
+
+\item
+	$\rho$ (the reconstruction map)
+    \begin{equation*}
+    \rho: L_C(o,k) \times Q \to \{0,1\}^X
+    \end{equation*}
+	is so that for all $(Y,y)$ in $L_C(1,n)$,
+    \begin{equation*}
+    \rho(\kappa(Y,y))_{|Y} = \{(Y,y) \}
+    \end{equation*}
+\end{itemize}
+
+\end{definition}
+
+
+\end{frame}
+
+
+% --------------------------------------------------
+\begin{frame}
+\frametitle{Example of Compression Schemes}
+\textbf{Note that:} Here we are looking for examples of \textbf{k-sample compression scheme with no additional}\\
+\textbf{rectangles}: Consider Class of axis parallel rectangles in $\mathcal{R}^2$; the point within a rectangles are labeled '1', and others '0'. Now compression function only saves the leftmost, rightmost, top and bottom point, so he always saves only 4 points with the labels. Consider the smallest rectangle consistent with all 4, now label every sample according to this rectangle, it is guaranteed to be consistent with original samples. Note that VC-Dimension of this class is also 4.
+
+
+\end{frame}
+
+
+\section{Motivation}
+
+% --------------------------------------------------
+\begin{frame}{The Big Motivation}
+\begin{itemize}
+    \item Classic teaching dimension ($TD_{worst}$) can be generally exponential of VC-Dimension.
+    \item We'll use RTD instead as a notion of complexity. 
+    \item $RTD(C) = O(VCD(C))?$
+\end{itemize}
+
+\begin{figure}[t]
+\includegraphics[width=0.3\textwidth]{Figures/friends.jpg}
+\end{figure}
+    
+\end{frame}
+
+
+% --------------------------------------------------
+\begin{frame}{The Big Motivation (cont.)}
+\begin{itemize}
+    
+    \item Another ambition for proving above equation is that it'll drive that there exists $O(VCD(C))$-sample compression scheme for $C$.
+    \item The question above has been open for about 40 years.
+\end{itemize}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.4\textwidth]{Figures/question-mark.jpg}
+\end{figure}
+\end{frame}
+
+% --------------------------------------------------
+\section{Quadratic Upper Bound on RTD}
+\begin{frame}
+\frametitle{Quadratic Upper Bound on RTD}
+
+\begin{lemma}
+For any x,y,z, that $y \leq 2^x - 1$, and $z \leq 2y + 1$ following inequality holds:
+\begin{equation*}
+f(x+1,z) \leq f(x,y) + \lceil \frac{(y+1)(x-1) + 1}{2y - z + 2} \rceil
+\end{equation*}
+\end{lemma}
+\begin{proof}
+Imagine C is a $(x+1,z)$, We'll define $C^Y_b = \{c \in C: C_{|Y} = b\}$. Also We'll denote $k = \lceil \frac{(y+1)(x-1) + 1}{2y - z + 2} \rceil$.
+we'll denote $Y^*, b^*$, smallest size $C^Y_b$ which is not empty and $|Y| = |b| = k$. Without loss of generality imagine $Y^* = [k]$ and $b^* = 0$. Now, we only need to prove $C^{Y^*}_{b^*}$ is $(x,y)$ class. Assume for the sake of contradiction that previous statement is false, it means that  there exist a $|Z| \leq x$, which $|\{c_{|Z}:c\in C^{Y^*}_{b^*}\}| \geq y + 1$ (Generally assume that $Z \cap Y^* = \varnothing$, otherwise consider $Z\backslash Y^*$, instead of Z ($Y^*$ has only one pattern which is zero so $Z\backslash Y^*$ cannot be empty)).
+\end{proof}
+\end{frame}
+
+
+% --------------------------------------------------
+\begin{frame}
+\frametitle{Quadratic Upper Bound on RTD (cont.)}
+
+\begin{proof}
+Now Define,
+\begin{equation*}
+C^{Y^*, Z}_{b^*} = \{c_{|Z}: c \in C^{Y^*}_{b^*}\}.
+\end{equation*}
+Since C is $(x+1,z)$ class, the projection of C on the set $Z \cup \{w\}$ has no more than z patterns. Thus
+\begin{equation*}
+|C^{Y^*, Z}_{b^*}| + |C^{\{w\}, Z}_{1}| \leq z
+\end{equation*}
+we know $|C^{Y^*, Z}_{b^*}| \geq y$, so $|C^{\{w\}, Z}_{1}| \leq z- y -1$. Now find $\tilde{C}^{Y^*, Z}_{b^*} \subseteq C^{Y^*, Z}_{b^*}$ so that $|\tilde{C}^{Y^*, Z}_{b^*}| = y+1$. $\forall w \in Y^*: |\tilde{C}^{Y^*, Z}_{b^*} \backslash C^{\{w\}, Z}_{1}| \geq 2y + 2 -z \geq 1$. Thus,
+% \begin{equation*}
+\begin{align*}
+\sum_{w \in Y^*} |\tilde{C}^{Y^*, Z}_{b^*} \backslash C^{\{w\}, Z}_{1}| \geq k(2y - z + 2) > (y + 1)(x - 1) \\= |\tilde{C}^{Y^*, Z}_{b^*}|(x - 1) \geq  |\tilde{C}^{Y^*, Z}_{b^*}|(|Z| - 1).    
+\end{align*}
+% \end{equation*}
+\end{proof}
+\end{frame}
+
+% --------------------------------------------------
+\begin{frame}
+\frametitle{Quadratic Upper Bound on RTD (cont.)}
+\begin{proof}
+It then follows from the Pigeonhole Principle that there exists $W \subseteq Y^*$ such that $|W| = |Z|$ and $\bigcap_{w \in W}(C^{Y^*, Z}_{b^*}\backslash C^{\{w\}, Z}_{1}) \neq \varnothing$. Pick any string in it called s, now 
+just like previous section $C^{(Y^*\backslash W)\cup Z}_{0\circ s}$ is a non empty and proper subset of $C^{Y^*}_{b^*}$, which is contradiction.
+\end{proof}
+\begin{corollary}
+$\forall 1<\alpha<2: f(X, \lfloor \alpha^ x\rfloor) \leq \frac{(x-1)^2}{4 - 2\alpha} + \frac{3 - 2\alpha}{4 - 2\alpha}(x-1) = o(X^2)$
+\end{corollary}
+\begin{lemma}
+For some constant $c$ for every $x > cd$, $(\frac{ex}{d})^d \leq \alpha^x$.
+\end{lemma}
+
+\end{frame}
+
+% --------------------------------------------------
+
+\begin{frame}
+\frametitle{Quadratic Upper Bound on RTD (cont.)}
+\begin{theorem}
+$RTD(C) = O(VCD(C)^2)$.
+\end{theorem}
+\begin{proof}
+By Saur's lemma we know that every concept class with VC-Dimension d, is $(x, (\frac{ex}{d})^d)$, after using previous lemma we'll drive that $\forall x > cd$, every concept class with VC-Dimension d is $(x, \lfloor \alpha^x \rfloor)$ class. Using the corollary we'll drive $TD_{min}(C) \leq O(x^2) = O((cd)^2) = O(d^2)$. Finally using lemma~\ref{lem:monot} we'll drive $RTD(C) = O(VCD(C)^2)$.
+\end{proof}
+\end{frame}
+
+\section{Our Contribution}
+\subsection{Some Definitions}
+% --------------------------------------------------
+\begin{frame}{Teaching Dimension w.r.t Global Preference Function}
+    
+
+We call a teaching set of $C$ w.r.t a global preference function $\sigma(c)$ as it follows,
+\begin{enumerate}
+\item Teacher chooses an teaching example $z_t = (x_t, \lambda)$ and updates current version space $C_t = C_{t-1} \cap H$, where $H$ is all the hypotheses which are consistent with $z_t$.
+\item Learner chooses $c_t = argmax_{c \in C_t } \sigma(c)$
+\item If $c_t = h^*$, then $Z_t = \{z_1, ..., z_t\}$ is a teaching teaching set of concept class $C$ w.r.t a global preference function $\sigma(c)$
+\end{enumerate}
+and we call teaching dimension of concept class $C$ w.r.t global preference $\sigma(c)$, $TD_{\sigma(c)} = max_{h^*} |Z_t|$, and  best teaching dimension of $C$ w.r.t global preference $TD_{local}(C) = min_{\sigma(c)} TD_{\sigma(c)} $.
+\end{frame}
+
+% --------------------------------------------------
+\begin{frame}{Teaching Dimension w.r.t Local Preference Function}
+
+We call a teaching set of $C$ w.r.t a local preference function $\sigma(c_t, c_{t-1})$ as it follows,
+\begin{enumerate}
+\item Teacher chooses an teaching example $z_t = (x_t, \lambda)$ and updates current version space $C_t = C_{t-1} \cap H$, where $H$ is all the hypotheses which are consistent with $z_t$.
+\item Learner chooses $c_t = argmax_{c \in C_t } \sigma(c, c_{t-1})$
+\item If $c_t = h^*$, then $Z_t = \{z_1, ..., z_t\}$ is a teaching teaching set of concept class $C$ w.r.t a global preference function $\sigma(c)$
+\end{enumerate}
+and we call teaching dimension of concept class $C$ w.r.t local preference $\sigma(c)$, $TD_{\sigma(c)} = max_{h^*} |Z_t|$, and  best teaching dimension of $C$ w.r.t global preference $TD_{local}(C) = min_{\sigma(c)} TD_{\sigma(c)} $.
+
+\end{frame}
+
+% --------------------------------------------------
+\begin{frame}{Teaching Dimension for Global Preference Functions vs. RTD}
+
+\begin{theorem}
+Teaching Dimension w.r.t Global Preference Function is Equivalent to RTD.
+\end{theorem}   
+\begin{proof}
+\textbf{Idea}: Order teaching plan in the way that higher preference is first in the list. 
+\end{proof}
+
+\end{frame}
+
+\subsection{Main Goal}
+% --------------------------------------------------
+\begin{frame}{Main Goal}
+    \begin{itemize}
+        \item  As explained before, the main motivation is proving $RTD(C) = O(VCD)$.
+        \item Teaching Dimension w.r.t Global Preference Function is obviously less than Teaching Dimension w.r.t Local Preference Function.
+        \item We'll try to prove to prove Teaching Dimension of $C$ w.r.t Local Preference Function is $O(VCD(C))$.
+        
+    \end{itemize}
+   
+\end{frame}
+ 
+ 
+ %------------------------------------------------------
+\begin{frame}
+\frametitle{Main Goal (cont.)}
+    \begin{itemize}
+        \item this question is very interesting since Teaching Dimension w.r.t Local Preference Function is more near to human behaviour.
+    \end{itemize}
+    
+    \begin{figure}[t]
+    
+    \centering
+    % \top
+    \includegraphics[angle = 0, width=0.8\textwidth]{Figures/evolution.png}
+
+    \end{figure}
+   
+\end{frame}
+
+ %------------------------------------------------------
+\begin{frame}
+\frametitle{Resources}
+\footnotesize{
+ \begin{thebibliography}{99} % Beamer does not support BibTeX so references must be inserted manually as below
+\bibitem[Doliwa et. al., 2014]{p1} Thorsten Doliwa and Gaojian Fan and Hans Ulrich Simon and Sandra Zilles(2014)
+\newblock Recursive Teaching Dimension, VC-Dimension and Sample Compression
+\newblock \emph{Journal of Machine Learning Research} 15, 3107-3131.
+\end{thebibliography}
+}
+
+\footnotesize{
+ \begin{thebibliography}{99} % Beamer does not support BibTeX so references must be inserted manually as below
+\bibitem[Kuhlmann, 1998]{p1} Christian Kuhlmann(1998)
+\newblock On teaching and learning intersection-closed concept classes
+\newblock \emph{European Conference on Computational Learning Theory} 15, 168--182.
+\end{thebibliography}
+}
+
+\footnotesize{
+ \begin{thebibliography}{99} % Beamer does not support BibTeX so references must be inserted manually as below
+\bibitem[Hu et. al., 2017]{p1} Lunjia Hu and
+               Ruihan Wu and
+               Tianhong Li and
+               Liwei Wang(2017)
+\newblock Quadratic Upper Bound for Recursive Teaching Dimension of Finite VC
+               Classes
+\newblock \emph{http://arxiv.org/abs/1702.05677}
+\end{thebibliography}
+}
+
+\footnotesize{
+ \begin{thebibliography}{99} % Beamer does not support BibTeX so references must be inserted manually as below
+\bibitem[Moran et. al., 2015]{p1} Shay Moran and
+               Amir Shpilka and
+               Avi Wigderson and
+               Amir Yehudayoff(2015)
+\newblock Teaching and compressing for low VC-dimension
+\newblock \emph{CoRR}
+\end{thebibliography}
+}
+
+
+\footnotesize{
+ \begin{thebibliography}{99} % Beamer does not support BibTeX so references must be inserted manually as below
+\bibitem[Chen et. al., 2018]{p1} Chen, Yuxin and Singla, Adish and Mac Aodha, Oisin and Perona, Pietro and Yue, Yisong (2018)
+\newblock Understanding the Role of Adaptivity in Machine Teaching: The Case of Version Space Learners
+\newblock \emph{arXiv preprint arXiv:1802.05190}
+\end{thebibliography}
+}
+
+
+   
+\end{frame}
+
+
+
+
+
+% --------------------------------------------------
+% this may be used
+
+
+
+% \begin{frame}
+% \frametitle{Overview} % Table of contents slide, comment this block out to remove it
+% \tableofcontents % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
+% \end{frame}
+
+% %from here
+
+% %----------------------------------------------------------------------------------------
+% %	PRESENTATION SLIDES
+% %----------------------------------------------------------------------------------------
+
+% %------------------------------------------------
+% \section{First Section} % Sections can be created in order to organize your presentation into discrete blocks, all sections and subsections are automatically printed in the table of contents as an overview of the talk
+% %------------------------------------------------
+
+% \subsection{Subsection Example} % A subsection can be created just before a set of slides with a common theme to further break down your presentation into chunks
+
+% \begin{frame}
+% \frametitle{Paragraphs of Text}
+% Sed iaculis dapibus gravida. Morbi sed tortor erat, nec interdum arcu. Sed id lorem lectus. Quisque viverra augue id sem ornare non aliquam nibh tristique. Aenean in ligula nisl. Nulla sed tellus ipsum. Donec vestibulum ligula non lorem vulputate fermentum accumsan neque mollis.\\~\\
+
+% Sed diam enim, sagittis nec condimentum sit amet, ullamcorper sit amet libero. Aliquam vel dui orci, a porta odio. Nullam id suscipit ipsum. Aenean lobortis commodo sem, ut commodo leo gravida vitae. Pellentesque vehicula ante iaculis arcu pretium rutrum eget sit amet purus. Integer ornare nulla quis neque ultrices lobortis. Vestibulum ultrices tincidunt libero, quis commodo erat ullamcorper id.
+% \end{frame}
+
+% %------------------------------------------------
+
+% \begin{frame}
+% \frametitle{Bullet Points}
+% \begin{itemize}
+% \item Lorem ipsum dolor sit amet, consectetur adipiscing elit
+% \item Aliquam blandit faucibus nisi, sit amet dapibus enim tempus eu
+% \item Nulla commodo, erat quis gravida posuere, elit lacus lobortis est, quis porttitor odio mauris at libero
+% \item Nam cursus est eget velit posuere pellentesque
+% \item Vestibulum faucibus velit a augue condimentum quis convallis nulla gravida
+% \end{itemize}
+% \end{frame}
+
+% %------------------------------------------------
+
+% \begin{frame}
+% \frametitle{Blocks of Highlighted Text}
+% \begin{block}{Block 1}
+% Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lectus nisl, ultricies in feugiat rutrum, porttitor sit amet augue. Aliquam ut tortor mauris. Sed volutpat ante purus, quis accumsan dolor.
+% \end{block}
+
+% \begin{block}{Block 2}
+% Pellentesque sed tellus purus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum quis magna at risus dictum tempor eu vitae velit.
+% \end{block}
+
+% \begin{block}{Block 3}
+% Suspendisse tincidunt sagittis gravida. Curabitur condimentum, enim sed venenatis rutrum, ipsum neque consectetur orci, sed blandit justo nisi ac lacus.
+% \end{block}
+% \end{frame}
+
+% %------------------------------------------------
+
+% \begin{frame}
+% \frametitle{Multiple Columns}
+% \begin{columns}[c] % The "c" option specifies centered vertical alignment while the "t" option is used for top vertical alignment
+
+% \column{.45\textwidth} % Left column and width
+% \textbf{Heading}
+% \begin{enumerate}
+% \item Statement
+% \item Explanation
+% \item Example
+% \end{enumerate}
+
+% \column{.5\textwidth} % Right column and width
+% Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lectus nisl, ultricies in feugiat rutrum, porttitor sit amet augue. Aliquam ut tortor mauris. Sed volutpat ante purus, quis accumsan dolor.
+
+% \end{columns}
+% \end{frame}
+
+% %------------------------------------------------
+% \section{Second Section}
+% %------------------------------------------------
+
+% \begin{frame}
+% \frametitle{Table}
+% \begin{table}
+% \begin{tabular}{l l l}
+% \toprule
+% \textbf{Treatments} & \textbf{Response 1} & \textbf{Response 2}\\
+% \midrule
+% Treatment 1 & 0.0003262 & 0.562 \\
+% Treatment 2 & 0.0015681 & 0.910 \\
+% Treatment 3 & 0.0009271 & 0.296 \\
+% \bottomrule
+% \end{tabular}
+% \caption{Table caption}
+% \end{table}
+% \end{frame}
+
+% %------------------------------------------------
+
+% \begin{frame}
+% \frametitle{Theorem}
+% \begin{theorem}[Mass--energy equivalence]
+% $E = mc^2$
+% \end{theorem}
+% \end{frame}
+
+% %------------------------------------------------
+
+% \begin{frame}[fragile] % Need to use the fragile option when verbatim is used in the slide
+% \frametitle{Verbatim}
+% \begin{example}[Theorem Slide Code]
+% \begin{verbatim}
+% \begin{frame}
+% \frametitle{Theorem}
+% \begin{theorem}[Mass--energy equivalence]
+% $E = mc^2$
+% \end{theorem}
+% \end{frame}\end{verbatim}
+% \end{example}
+% \end{frame}
+
+% %------------------------------------------------
+
+% \begin{frame}
+% \frametitle{Figure}
+% Uncomment the code on this slide to include your own image from the same directory as the template .TeX file.
+% %\begin{figure}
+% %\includegraphics[width=0.8\linewidth]{test}
+% %\end{figure}
+% \end{frame}
+
+% %------------------------------------------------
+
+% \begin{frame}[fragile] % Need to use the fragile option when verbatim is used in the slide
+% \frametitle{Citation}
+% An example of the \verb|\cite| command to cite within the presentation:\\~
+
+% This statement requires citation \cite{p1}.
+% \end{frame}
+
+% %------------------------------------------------
+
+% \begin{frame}
+% \frametitle{References}
+% \footnotesize{
+% \begin{thebibliography}{99} % Beamer does not support BibTeX so references must be inserted manually as below
+% \bibitem[Smith, 2012]{p1} John Smith (2012)
+% \newblock Title of the publication
+% \newblock \emph{Journal Name} 12(3), 45 -- 678.
+% \end{thebibliography}
+% }
+% \end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\Huge{\centerline{The End}}
+\end{frame}
+
+%----------------------------------------------------------------------------------------
+
+\end{document}
